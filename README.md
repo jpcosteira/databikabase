@@ -10,7 +10,7 @@ Base de dados com formulario gradio
 - Base de Dados e formulário totalmente especificado a partir de ficheiro de configuração config.yaml 
 
 ### Para detalhes consultar pasta app
-
+[app/config.yaml](app/config.yaml)
 ### Utilitários importantes
 
 - Editor de SQL: https://dbeaver.com/docs/dbeaver/ https://sqlitebrowser.org/dl/
