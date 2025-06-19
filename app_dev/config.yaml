@@ -17,6 +17,10 @@ interface:
             - name: "age"
               type: "number"
               label: "Age"
+            - name: "condition"
+              type: "dropdown"
+              label: "Condição Física"
+              options: ["Atleta", "Normal", "A cair da tripeça"]
         - row: false
           fields:
             - name: "appointment"

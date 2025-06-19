@@ -1,34 +1,64 @@
 database:
-  name: "data/user_data.db"
-  table: "users"
+  name: data.db
+  table: records
+
+auth:
+  password: "admin123"
+
 interface:
   tabs:
-    - name: "Tab 1"
-      fields:
-        - name: "DataInscr"
-          label: "Data de Inscrição"
-          type: "text"
-        - name: "motivo"
-          label: "Motivo para referenciação"
-          type: "text"
-        - name: "txinicial"
-          label: "Tx inicial Noutra instituição"
-          type: "text"
+    - name: "Basic Info"
+      layout:
+        - row: true
+          fields:
+            - name: "name"
+              type: "text"
+              label: "Full Name"
+            - name: "age"
+              type: "number"
+              label: "Age"
+            - name: "condition"
+              type: "dropdown"
+              label: "Condição Física"
+              options: ["Atleta", "Normal", "A cair da tripeça"]
+        - row: false
+          fields:
+            - name: "appointment"
+              type: "datetime"
+              label: "Appointment Date"
+              default: "2025-06-19T10:00"
+    - name: "Hx Clinica"
+      layout:
+        - row: true
+          fields:
+            - name: "DataInscr"
+              label: "Data de Inscrição"
+              type: "text"
+            - name: "motivo"
+              label: "Motivo para referenciação"
+              type: "text"
+            - name: "txinicial"
+              label: "Tx inicial Noutra instituição"
+              type: "text"
     - name: "Imagem - Estadiamento"
-      fields:
-        - name: "nnn"
-          label: "Subscribe to Newsletter"
-          type: "checkbox"
-        - name: "emailbx"
-          label: "Emailbx"
-          type: "text"
-          default: true
+      layout:
+        - row: false
+          fields:
+            - name: "nnn"
+              label: "Subscribe to Newsletter"
+              type: "checkbox"
+            - name: "emailbx"
+              label: "Emailbx"
+              type: "text"
+              default: true
     - name: "Mais um Tab"
-      fields:
-        - name: "newasletter"
-          label: "Subscribe to Newsletter"
-          type: "checkbox"
-        - name: "emaialbx"
-          label: "Emaialbx"
-          type: "text"
-          default: true
+      layout:
+        - row: true
+          fields:
+            - name: "newasletter"
+              label: "Subscribe to Newsletter"
+              type: "checkbox"
+            - name: "emaialbx"
+              label: "Emaialbx"
+              type: "text"
+              default: true
