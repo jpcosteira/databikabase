@@ -1,7 +1,7 @@
 # Gradio-based SQL input form
 
 Base de dados com formulario gradio
-![images/esquema.jpg]
+![images/esquema.jpg](ESQUEMA)
 
 ## Componentes principais:
 
