@@ -26,7 +26,7 @@ interface:
             - name: "appointment"
               type: "datetime"
               label: "Appointment Date"
-              default: "2025-06-19T10:00"
+              default: "1143-01-01T10:00"
     - name: "Hx Clinica"
       layout:
         - row: true

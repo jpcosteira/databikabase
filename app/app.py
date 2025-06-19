@@ -2,6 +2,7 @@ import gradio as gr
 import sqlite3
 import yaml
 import os
+import csv
 from datetime import datetime
 
 # Load configuration from YAML
@@ -36,18 +37,12 @@ def sync_db_schema():
 
     with sqlite3.connect(db_name) as conn:
         cursor = conn.cursor()
-        # Create table if not exists with ID only
         cursor.execute(f"CREATE TABLE IF NOT EXISTS {table_name} (id TEXT PRIMARY KEY)")
-
-        # Get current columns
         cursor.execute(f"PRAGMA table_info({table_name})")
         existing_columns = {row[1]: row[2] for row in cursor.fetchall()}
-
-        # Add missing columns
         for field, ftype in expected_fields.items():
             if field not in existing_columns:
                 cursor.execute(f"ALTER TABLE {table_name} ADD COLUMN {field} {ftype}")
-
         conn.commit()
 
 # Build the Gradio UI
@@ -63,8 +58,58 @@ def build_ui():
             load_btn = gr.Button("🔍 Load")
             save_btn = gr.Button("💾 Save")
 
-        for tab in config["interface"]["tabs"]:
+        tab_list = config["interface"]["tabs"] + [{"name": "All Data"}]
+
+        for tab in tab_list:
             with gr.Tab(tab["name"]):
+                if tab["name"] == "All Data":
+                    with gr.Row():
+                        view_pwd = gr.Textbox(label="Password", type="password", placeholder="Enter password")
+                        filter_field = gr.Dropdown(label="Sort by Field", choices=["id"])
+                        filter_text = gr.Textbox(label="Filter Contains")
+                        refresh_btn = gr.Button("🔄 Refresh Table")
+                        export_btn = gr.Button("📁 Download CSV")
+
+                    data_table = gr.Dataframe(headers=["id"], label="All Records", interactive=False)
+                    file_output = gr.File(label="CSV File")
+
+                    def show_all_data(pwd, sort_field, filter_val):
+                        if pwd != admin_password:
+                            return [], None
+                        with sqlite3.connect(db_name) as conn:
+                            cursor = conn.cursor()
+                            query = f"SELECT * FROM {table_name}"
+                            params = []
+                            if filter_val:
+                                query += f" WHERE {sort_field} LIKE ?"
+                                params.append(f"%{filter_val}%")
+                            query += f" ORDER BY {sort_field}"
+                            cursor.execute(query, params)
+                            rows = cursor.fetchall()
+                            headers = [desc[0] for desc in cursor.description]
+
+                        data_table.headers = headers
+                        return rows, None
+
+                    def export_csv(pwd):
+                        if pwd != admin_password:
+                            return None
+                        filepath = "export.csv"
+                        with sqlite3.connect(db_name) as conn:
+                            cursor = conn.cursor()
+                            cursor.execute(f"SELECT * FROM {table_name}")
+                            rows = cursor.fetchall()
+                            headers = [desc[0] for desc in cursor.description]
+                            with open(filepath, "w", newline="") as f:
+                                writer = csv.writer(f)
+                                writer.writerow(headers)
+                                writer.writerows(rows)
+                        return filepath
+
+                    refresh_btn.click(fn=show_all_data, inputs=[view_pwd, filter_field, filter_text], outputs=[data_table, file_output])
+                    export_btn.click(fn=export_csv, inputs=[view_pwd], outputs=file_output)
+                    continue
+
                 for section in tab.get("layout", []):
                     container = gr.Row() if section.get("row") else gr.Column()
                     with container:
@@ -152,9 +197,7 @@ def build_ui():
         save_btn.click(fn=save_data, inputs=[id_input, password_input] + list(field_components.values()), outputs=status_box)
 
     return demo
-    
 # Initialize database and launch app
 sync_db_schema()
 demo = build_ui()
-
 demo.launch()
