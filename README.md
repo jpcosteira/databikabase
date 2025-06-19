@@ -1,4 +1,4 @@
-# Gradio-based SQL input form
+# Formulário web configurável para SQLite
 
 Base de dados com formulario gradio
 ![ESQUEMA](images/esquema.jpg)
