@@ -1,12 +1,13 @@
 
 services:
   gradio_sql_app:
-    image: jpcosteira/formsipg
+    image: jpcosteira/formsipg:dev
     container_name: bika
     ports:
       - "7862:7860"
+      - "8888:8888"      
     volumes:
-      - ./app:/home/jpc/
+      - ./:/home/jpc/
     environment:
       - GRADIO_SERVER_NAME=0.0.0.0
     restart: unless-stopped

@@ -1,0 +1,13 @@
+{
+  "base_url": "/",
+  "hostname": "0.0.0.0",
+  "password": false,
+  "pid": 7,
+  "port": 8888,
+  "root_dir": "/home/jpc",
+  "secure": false,
+  "sock": "",
+  "token": "16408d398ecdec7f0a06098ed07304b686283890c30ac97d",
+  "url": "http://7ca57246c1a0:8888/",
+  "version": "2.16.0"
+}

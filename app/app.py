@@ -198,6 +198,7 @@ def build_ui():
 
     return demo
 # Initialize database and launch app
-sync_db_schema()
-demo = build_ui()
-demo.launch()
+if __name__ == '__main__':
+    sync_db_schema()
+    demo = build_ui()
+    demo.launch()
