@@ -1,64 +1,26 @@
 database:
-  name: data.db
-  table: records
+  name: migration.db
+  table: registo
 
 auth:
-  password: "admin123"
+  password: "sipg2dsi"
 
 interface:
   tabs:
-    - name: "Basic Info"
+    - name: "Dados ISR/Omni"
       layout:
         - row: true
           fields:
             - name: "name"
               type: "text"
-              label: "Full Name"
-            - name: "age"
-              type: "number"
-              label: "Age"
-            - name: "condition"
-              type: "dropdown"
-              label: "Condição Física"
-              options: ["Atleta", "Normal", "A cair da tripeça"]
-        - row: false
-          fields:
-            - name: "appointment"
-              type: "datetime"
-              label: "Appointment Date"
-              default: "1143-01-01T10:00"
-    - name: "Hx Clinica"
+              label: "Name"
+            - name: "username_omni"
+              type: "text"
+              label: "Username@omni"
+    - name: "Dados DSI/Sigma"
       layout:
         - row: true
           fields:
-            - name: "DataInscr"
-              label: "Data de Inscrição"
+            - name: "username_dsi"
+              label: "Username@DSI (istxxxxx)"
               type: "text"
-            - name: "motivo"
-              label: "Motivo para referenciação"
-              type: "text"
-            - name: "txinicial"
-              label: "Tx inicial Noutra instituição"
-              type: "text"
-    - name: "Imagem - Estadiamento"
-      layout:
-        - row: false
-          fields:
-            - name: "nnn"
-              label: "Subscribe to Newsletter"
-              type: "checkbox"
-            - name: "emailbx"
-              label: "Emailbx"
-              type: "text"
-              default: true
-    - name: "Mais um Tab"
-      layout:
-        - row: true
-          fields:
-            - name: "newasletter"
-              label: "Subscribe to Newsletter"
-              type: "checkbox"
-            - name: "emaialbx"
-              label: "Emaialbx"
-              type: "text"
-              default: true
